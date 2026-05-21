@@ -1,0 +1,67 @@
+// ============================================
+// Taher Development - Prisma Database Schema
+// Database: SQLite (Production-ready, migrates to PostgreSQL)
+// ============================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// Admin User Model - Authentication
+// ============================================
+model User {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  name         String?
+  role         String   @default("admin")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+// ============================================
+// Real Estate Project Model - Dynamic Listings
+// ============================================
+model Project {
+  id           String   @id @default(cuid())
+  titleAr      String   @map("title_ar")
+  locationAr   String   @map("location_ar")
+  price        String
+  area         String?
+  descriptionAr String? @map("description_ar")
+  status       String   @default("متاح للبيع")
+  type         String?
+  videoLink    String?  @map("video_link")
+  images       String   @default("[]") // JSON array of image URLs
+  amenities    String   @default("[]") // JSON array of amenities
+  floorPlans   String   @default("[]") // JSON array of floor plans
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("projects")
+}
+
+// ============================================
+// Customer Leads Model - Contact Form Submissions
+// ============================================
+model Lead {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String
+  email     String
+  message   String
+  isRead    Boolean  @default(false) @map("is_read")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("leads")
+}
