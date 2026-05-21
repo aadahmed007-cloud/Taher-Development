@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { MapPin, ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import Link from 'next/link';
+import { MapPin, ChevronLeft, ChevronRight, Play, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProjectModal from './ProjectModal';
 import VideoModal from './VideoModal';
@@ -55,6 +56,7 @@ function ProjectCarousel({
     <div className="relative h-64 w-full overflow-hidden group/carousel">
       <div
         className="flex h-full transition-transform duration-500 ease-out"
+        dir="ltr"
         style={{ transform: `translateX(${currentIndex * 100}%)` }}
       >
         {images.map((img, idx) => (
@@ -84,7 +86,7 @@ function ProjectCarousel({
           }}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-black/50 border-2 border-[#D4AF37]/50 rounded-full flex items-center justify-center text-[#D4AF37] opacity-80 hover:opacity-100 hover:scale-110 hover:bg-black/70 hover:border-[#D4AF37] transition-all duration-300 z-10"
         >
-          <Play fill="currentColor" size={24} className="ml-1" />
+          <Play fill="currentColor" size={24} className="ms-1" />
         </button>
       )}
 
@@ -193,7 +195,7 @@ export default function Projects({ projects }: { projects: ProjectData[] }) {
 
                 <div className="p-6 relative flex-grow flex flex-col justify-between">
                   <div>
-                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:gold-text transition-colors">
+                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-[#D4AF37] transition-colors">
                       {project.titleAr}
                     </h3>
                     <div className="flex items-center text-slate-400 gap-2 mb-6">
@@ -202,13 +204,22 @@ export default function Projects({ projects }: { projects: ProjectData[] }) {
                     </div>
                   </div>
 
-                  <button
-                    onClick={() => setSelectedProject(project)}
-                    className="w-full border-t border-slate-700 pt-4 gold-text hover:text-white font-bold text-sm tracking-wide transition-all duration-300 text-right flex items-center gap-2 group-hover:border-[#D4AF37]"
-                  >
-                    <span className="w-4 h-[1px] gold-gradient"></span>
-                    تفاصيل المشروع
-                  </button>
+                  <div className="border-t border-slate-700 pt-4 flex items-center justify-between group-hover:border-[#D4AF37]">
+                    <button
+                      onClick={() => setSelectedProject(project)}
+                      className="gold-text hover:text-white font-bold text-sm tracking-wide transition-all duration-300 flex items-center gap-2"
+                    >
+                      <span className="w-4 h-[1px] gold-gradient"></span>
+                      تفاصيل المشروع
+                    </button>
+                    <Link
+                      href={`/projects/${project.id}`}
+                      className="inline-flex items-center gap-1.5 text-slate-400 hover:text-[#D4AF37] text-xs font-medium transition-colors duration-300 border border-slate-700 hover:border-[#D4AF37] px-3 py-1.5 rounded-sm"
+                    >
+                      عرض التفاصيل
+                      <ExternalLink size={12} />
+                    </Link>
+                  </div>
                 </div>
               </motion.div>
             ))}

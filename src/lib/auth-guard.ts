@@ -5,7 +5,7 @@
 
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 /**
  * Returns the authenticated admin session or null.
@@ -28,6 +28,36 @@ export async function requireAuth() {
       error: NextResponse.json(
         { error: "غير مصرح بالوصول. يرجى تسجيل الدخول أولاً." },
         { status: 401 }
+      ),
+    };
+  }
+
+  return { session, error: null };
+}
+
+/**
+ * Admin-only guard - checks both authentication and admin role.
+ * Returns the session if admin, or an error response if not.
+ */
+export async function requireAdmin() {
+  const session = await getServerSession(authOptions);
+
+  if (!session || !session.user) {
+    return {
+      session: null,
+      error: NextResponse.json(
+        { error: "غير مصرح بالوصول. يرجى تسجيل الدخول أولاً." },
+        { status: 401 }
+      ),
+    };
+  }
+
+  if ((session.user as Record<string, unknown>).role !== "admin") {
+    return {
+      session: null,
+      error: NextResponse.json(
+        { error: "صلاحيات غير كافية. هذا الإجراء يتطلب صلاحيات المدير." },
+        { status: 403 }
       ),
     };
   }

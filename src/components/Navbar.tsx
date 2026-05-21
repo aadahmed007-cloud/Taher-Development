@@ -48,6 +48,8 @@ export default function Navbar() {
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="gold-text hover:text-white transition-colors"
+              aria-label={isOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
+              aria-expanded={isOpen}
             >
               {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
@@ -63,7 +65,7 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className="block px-3 py-2 rounded-sm text-sm font-light tracking-widest uppercase text-slate-300 hover:gold-text hover:bg-slate-800/50 transition-colors"
+                className="block px-3 py-2 rounded-sm text-sm font-light tracking-widest uppercase text-slate-300 hover:text-[#D4AF37] hover:bg-slate-800/50 transition-colors"
               >
                 {link.name}
               </a>

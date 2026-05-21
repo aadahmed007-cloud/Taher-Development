@@ -1,41 +1,33 @@
 // ============================================
 // POST /api/contact - Customer Lead Submission
 // Validates and stores customer leads from landing page
+// GET /api/contact - Admin-only leads retrieval with pagination
 // ============================================
 
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
+import { contactSchema } from "@/lib/validations";
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, phone, email, message } = body;
 
-    // Server-side validation
-    const errors: string[] = [];
+    // Validate with Zod schema
+    const validationResult = contactSchema.safeParse(body);
 
-    if (!name || typeof name !== "string" || name.trim().length < 2) {
-      errors.push("الاسم مطلوب ويجب أن يكون حرفين على الأقل");
-    }
-
-    if (!phone || typeof phone !== "string" || phone.trim().length < 8) {
-      errors.push("رقم الهاتف مطلوب ويجب أن يكون 8 أرقام على الأقل");
-    }
-
-    if (!email || typeof email !== "string" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      errors.push("البريد الإلكتروني غير صالح");
-    }
-
-    if (!message || typeof message !== "string" || message.trim().length < 5) {
-      errors.push("الرسالة مطلوبة ويجب أن تكون 5 أحرف على الأقل");
-    }
-
-    if (errors.length > 0) {
+    if (!validationResult.success) {
+      const errors = validationResult.error.issues.map(
+        (issue) => issue.message
+      );
       return NextResponse.json(
         { error: "فشل التحقق من البيانات", details: errors },
         { status: 400 }
       );
     }
+
+    const { name, phone, email, message } = validationResult.data;
 
     // Sanitize inputs
     const sanitizedData = {
@@ -85,21 +77,36 @@ export async function POST(request: NextRequest) {
 }
 
 // GET endpoint for admin to retrieve leads (protected)
-export async function GET() {
-  const { getServerSession } = await import("next-auth/next");
-  const { authOptions } = await import("@/lib/auth");
-
+export async function GET(request: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session) {
     return NextResponse.json({ error: "غير مصرح بالوصول" }, { status: 401 });
   }
 
   try {
-    const leads = await db.lead.findMany({
-      orderBy: { createdAt: "desc" },
-    });
+    const { searchParams } = new URL(request.url);
+    const page = Math.max(1, parseInt(searchParams.get("page") || "1"));
+    const limit = Math.min(100, Math.max(1, parseInt(searchParams.get("limit") || "20")));
+    const skip = (page - 1) * limit;
 
-    return NextResponse.json({ leads });
+    const [leads, total] = await Promise.all([
+      db.lead.findMany({
+        orderBy: { createdAt: "desc" },
+        skip,
+        take: limit,
+      }),
+      db.lead.count(),
+    ]);
+
+    return NextResponse.json({
+      leads,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    });
   } catch (error) {
     console.error("[LEADS_GET_ERROR]", error);
     return NextResponse.json({ error: "خطأ في جلب البيانات" }, { status: 500 });

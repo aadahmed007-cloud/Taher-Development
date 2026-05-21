@@ -1,14 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import { Loader2, CheckCircle } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Loader2, CheckCircle, AlertCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function SettingsPage() {
   const { data: session } = useSession();
   const [isSaving, setIsSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const [notification, setNotification] = useState<{
+    type: 'success' | 'error';
+    message: string;
+  } | null>(null);
   const [settings, setSettings] = useState({
     name: session?.user?.name || 'المدير العام',
     email: session?.user?.email || 'admin@taher.com',
@@ -17,20 +20,98 @@ export default function SettingsPage() {
     confirmPassword: '',
   });
 
+  // Auto-dismiss notifications
+  useEffect(() => {
+    if (notification) {
+      const timer = setTimeout(() => setNotification(null), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [notification]);
+
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Client-side validation
+    if (settings.newPassword || settings.confirmPassword || settings.currentPassword) {
+      if (!settings.currentPassword) {
+        setNotification({ type: 'error', message: 'يجب إدخال كلمة المرور الحالية لتغييرها' });
+        return;
+      }
+      if (settings.newPassword.length < 8) {
+        setNotification({ type: 'error', message: 'كلمة المرور الجديدة يجب أن تكون 8 أحرف على الأقل' });
+        return;
+      }
+      if (settings.newPassword !== settings.confirmPassword) {
+        setNotification({ type: 'error', message: 'كلمة المرور الجديدة وتأكيدها غير متطابقتين' });
+        return;
+      }
+    }
+
     setIsSaving(true);
 
-    // Simulate save operation
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const body: Record<string, string> = {
+        name: settings.name,
+        email: settings.email,
+      };
 
-    setSaved(true);
-    setIsSaving(false);
-    setTimeout(() => setSaved(false), 3000);
+      if (settings.currentPassword && settings.newPassword) {
+        body.currentPassword = settings.currentPassword;
+        body.newPassword = settings.newPassword;
+      }
+
+      const res = await fetch('/api/users', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setNotification({ type: 'success', message: data.message || 'تم تحديث البيانات بنجاح' });
+        // Clear password fields on success
+        setSettings((prev) => ({
+          ...prev,
+          currentPassword: '',
+          newPassword: '',
+          confirmPassword: '',
+        }));
+      } else {
+        setNotification({ type: 'error', message: data.error || 'حدث خطأ أثناء تحديث البيانات' });
+      }
+    } catch {
+      setNotification({ type: 'error', message: 'خطأ في الاتصال بالخادم' });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
     <div className="space-y-6">
+      {/* Notification */}
+      <AnimatePresence>
+        {notification && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className={`flex items-center gap-3 p-4 rounded-sm border ${
+              notification.type === 'success'
+                ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+                : 'bg-red-500/10 border-red-500/20 text-red-400'
+            }`}
+          >
+            {notification.type === 'success' ? (
+              <CheckCircle size={20} />
+            ) : (
+              <AlertCircle size={20} />
+            )}
+            <span className="text-sm font-medium">{notification.message}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 className="text-2xl font-bold text-white mb-1">الإعدادات</h2>
@@ -89,6 +170,9 @@ export default function SettingsPage() {
                       className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#D4AF37] focus:border-[#D4AF37] sm:text-sm p-3 transition-colors"
                       dir="ltr"
                     />
+                    {settings.newPassword && settings.newPassword.length < 8 && (
+                      <p className="text-red-400 text-xs mt-1">كلمة المرور يجب أن تكون 8 أحرف على الأقل</p>
+                    )}
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-300 mb-1">تأكيد كلمة المرور</label>
@@ -99,6 +183,9 @@ export default function SettingsPage() {
                       className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#D4AF37] focus:border-[#D4AF37] sm:text-sm p-3 transition-colors"
                       dir="ltr"
                     />
+                    {settings.confirmPassword && settings.newPassword !== settings.confirmPassword && (
+                      <p className="text-red-400 text-xs mt-1">كلمتا المرور غير متطابقتين</p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -119,16 +206,6 @@ export default function SettingsPage() {
                   'حفظ التغييرات'
                 )}
               </button>
-              {saved && (
-                <motion.div
-                  initial={{ opacity: 0, x: 10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  className="flex items-center gap-2 text-emerald-400 text-sm"
-                >
-                  <CheckCircle size={16} />
-                  تم الحفظ بنجاح
-                </motion.div>
-              )}
             </div>
           </form>
         </div>

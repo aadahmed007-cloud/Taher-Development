@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 export default function Hero() {
   return (
@@ -67,9 +68,17 @@ export default function Hero() {
                 initial={{ opacity: 0, scale: 1.1 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1.5, ease: "easeOut" }}
-                className="w-full h-full bg-cover bg-center"
-                style={{ backgroundImage: 'url("https://picsum.photos/seed/luxurybuilding3/1920/1080")' }}
-              />
+                className="w-full h-full relative"
+              >
+                <Image
+                  src="https://picsum.photos/seed/luxurybuilding3/1920/1080"
+                  alt="مشروع اللؤلؤة المميز - القاهرة الجديدة"
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </motion.div>
               <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-[#0F172A]/40 to-transparent"></div>
 
               <div className="absolute bottom-6 right-6 bg-[#0F172A]/90 p-4 border-r-4 gold-border border-[#D4AF37]">

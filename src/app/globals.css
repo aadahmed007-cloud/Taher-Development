@@ -8,7 +8,7 @@
   .font-cairo { font-family: var(--font-cairo), sans-serif; }
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar - Webkit (Chrome, Safari, Edge) */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
@@ -21,4 +21,10 @@
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #475569;
+}
+
+/* Custom Scrollbar - Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #334155 #0F172A;
 }

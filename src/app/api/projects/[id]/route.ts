@@ -9,6 +9,50 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
+import { unlink } from "fs/promises";
+import path from "path";
+
+// Allowed project status values
+const ALLOWED_STATUSES = [
+  "متاح للبيع",
+  "تحت الإنشاء",
+  "مباع بالكامل",
+  "متاح للإيجار",
+];
+
+/**
+ * Safe JSON parse helper - returns fallback instead of throwing
+ */
+function safeJsonParse(jsonString: string, fallback: unknown = null): unknown {
+  try {
+    return JSON.parse(jsonString);
+  } catch {
+    return fallback;
+  }
+}
+
+/**
+ * Delete associated image files from the filesystem
+ */
+async function deleteProjectFiles(project: { images: string; floorPlans: string }) {
+  const imageUrls: string[] = safeJsonParse(project.images, []) as string[];
+  const floorPlanData: { image?: string }[] = safeJsonParse(project.floorPlans, []) as { image?: string }[];
+  const floorPlanUrls = floorPlanData.map((fp) => fp.image).filter(Boolean) as string[];
+
+  const allUrls = [...imageUrls, ...floorPlanUrls];
+
+  for (const url of allUrls) {
+    // Only delete local files (paths starting with /uploads/)
+    if (typeof url === "string" && url.startsWith("/uploads/")) {
+      try {
+        const filePath = path.join(process.cwd(), "public", url);
+        await unlink(filePath);
+      } catch {
+        // File may not exist, ignore errors
+      }
+    }
+  }
+}
 
 // ============================================
 // GET /api/projects/[id] - Fetch single project (Public)
@@ -34,9 +78,9 @@ export async function GET(
     return NextResponse.json({
       project: {
         ...project,
-        images: JSON.parse(project.images),
-        amenities: JSON.parse(project.amenities),
-        floorPlans: JSON.parse(project.floorPlans),
+        images: safeJsonParse(project.images, []),
+        amenities: safeJsonParse(project.amenities, []),
+        floorPlans: safeJsonParse(project.floorPlans, []),
       },
     });
   } catch (error) {
@@ -75,8 +119,19 @@ export async function PUT(
       );
     }
 
+    // Validate status if provided
+    if (body.status && !ALLOWED_STATUSES.includes(body.status)) {
+      return NextResponse.json(
+        {
+          error: "فشل التحقق من البيانات",
+          details: [`حالة المشروع غير صالحة. القيم المسموحة: ${ALLOWED_STATUSES.join("، ")}`],
+        },
+        { status: 400 }
+      );
+    }
+
     // Build update data object with only provided fields
-    const updateData: Record<string, any> = {};
+    const updateData: Record<string, unknown> = {};
 
     if (body.titleAr !== undefined) updateData.titleAr = body.titleAr.trim();
     if (body.locationAr !== undefined) updateData.locationAr = body.locationAr.trim();
@@ -100,9 +155,9 @@ export async function PUT(
       message: "تم تحديث المشروع بنجاح",
       project: {
         ...updatedProject,
-        images: JSON.parse(updatedProject.images),
-        amenities: JSON.parse(updatedProject.amenities),
-        floorPlans: JSON.parse(updatedProject.floorPlans),
+        images: safeJsonParse(updatedProject.images, []),
+        amenities: safeJsonParse(updatedProject.amenities, []),
+        floorPlans: safeJsonParse(updatedProject.floorPlans, []),
       },
     });
   } catch (error) {
@@ -139,6 +194,9 @@ export async function DELETE(
         { status: 404 }
       );
     }
+
+    // Delete associated files before deleting the project record
+    await deleteProjectFiles(existingProject);
 
     await db.project.delete({ where: { id } });
 

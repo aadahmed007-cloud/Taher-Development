@@ -14,11 +14,13 @@ import {
   Menu,
   X,
   Loader2,
+  ExternalLink,
 } from 'lucide-react';
 import Logo from '@/components/Logo';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const pathname = usePathname();
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -29,6 +31,33 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       router.push('/admin/login');
     }
   }, [status, router]);
+
+  // Fetch unread messages count
+  useEffect(() => {
+    if (status !== 'authenticated') return;
+
+    let active = true;
+
+    const loadUnread = async () => {
+      try {
+        const res = await fetch('/api/contact');
+        if (res.ok && active) {
+          const data = await res.json();
+          const count = (data.leads || []).filter((l: { isRead: boolean }) => !l.isRead).length;
+          setUnreadCount(count);
+        }
+      } catch {
+        // Silently fail
+      }
+    };
+
+    loadUnread();
+    const interval = setInterval(loadUnread, 30000);
+    return () => {
+      active = false;
+      clearInterval(interval);
+    };
+  }, [status]);
 
   // Show loading state while checking authentication
   if (status === 'loading') {
@@ -49,7 +78,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const navigation = [
     { name: 'المشاريع', href: '/admin/dashboard', icon: Building2 },
-    { name: 'الرسائل الواردة', href: '/admin/dashboard/messages', icon: MessageSquare },
+    { name: 'الرسائل الواردة', href: '/admin/dashboard/messages', icon: MessageSquare, badge: unreadCount },
     { name: 'الإعدادات', href: '/admin/dashboard/settings', icon: Settings },
   ];
 
@@ -104,10 +133,28 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 >
                   <item.icon size={20} className={isActive ? 'text-[#D4AF37]' : 'text-slate-500 group-hover:text-slate-300'} />
                   <span className="font-medium">{item.name}</span>
+                  {item.badge && item.badge > 0 && (
+                    <span className="mr-auto bg-[#D4AF37] text-[#0F172A] text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1.5">
+                      {item.badge}
+                    </span>
+                  )}
                 </Link>
               );
             })}
           </nav>
+
+          {/* View Site Link */}
+          <div className="mt-6 pt-4 border-t border-[#D4AF37]/10">
+            <a
+              href="/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-[#D4AF37] hover:bg-[#D4AF37]/5 rounded-sm transition-all duration-200"
+            >
+              <ExternalLink size={20} />
+              <span className="font-medium">عرض الموقع</span>
+            </a>
+          </div>
         </div>
 
         <div className="p-4 border-t border-[#D4AF37]/10">

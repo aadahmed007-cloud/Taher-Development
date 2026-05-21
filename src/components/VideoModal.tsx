@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
@@ -9,10 +10,28 @@ interface VideoModalProps {
 }
 
 export default function VideoModal({ videoUrl, onClose }: VideoModalProps) {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    if (videoUrl) {
+      document.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [videoUrl, onClose]);
+
   return (
     <AnimatePresence>
       {videoUrl && (
-        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 sm:p-6" dir="rtl">
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -39,7 +58,7 @@ export default function VideoModal({ videoUrl, onClose }: VideoModalProps) {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 className="w-full h-full border-0"
-                title="Project Video"
+                title="فيديو المشروع"
               />
             </div>
           </motion.div>

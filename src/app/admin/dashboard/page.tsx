@@ -12,9 +12,12 @@ import {
   Loader2,
   AlertCircle,
   CheckCircle,
+  Building2,
+  TrendingUp,
+  Hammer,
+  Ban,
 } from 'lucide-react';
 import Image from 'next/image';
-import { type ProjectData } from '@/components/Projects';
 
 interface DashboardProject {
   id: string;
@@ -27,6 +30,7 @@ interface DashboardProject {
   type?: string | null;
   videoLink?: string | null;
   images: string[];
+  amenities: string[];
 }
 
 export default function DashboardProjects() {
@@ -35,6 +39,7 @@ export default function DashboardProjects() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [notification, setNotification] = useState<{
     type: 'success' | 'error';
@@ -56,6 +61,7 @@ export default function DashboardProjects() {
     status: 'متاح للبيع',
     type: '',
     videoLink: '',
+    amenities: '',
   });
 
   // Fetch projects from API
@@ -85,8 +91,14 @@ export default function DashboardProjects() {
     }
   }, [notification]);
 
+  // Stats computed from projects
+  const totalProjects = projects.length;
+  const availableCount = projects.filter((p) => p.status === 'متاح للبيع').length;
+  const underConstructionCount = projects.filter((p) => p.status === 'تحت الإنشاء').length;
+  const soldOutCount = projects.filter((p) => p.status === 'مباع بالكامل').length;
+
   const filteredProjects = projects.filter((p) =>
-    p.titleAr.includes(searchQuery) || p.locationAr.includes(searchQuery)
+    p.titleAr.toLowerCase().includes(searchQuery.toLowerCase()) || p.locationAr.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   // Upload files to server
@@ -113,7 +125,15 @@ export default function DashboardProjects() {
   const handleAddProject = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
     try {
+      // Parse amenities from comma-separated string
+      const amenitiesArray = newProject.amenities
+        ? newProject.amenities.split(',').map((a) => a.trim()).filter((a) => a.length > 0)
+        : [];
+
       const body = {
         titleAr: newProject.titleAr,
         locationAr: newProject.locationAr,
@@ -124,6 +144,7 @@ export default function DashboardProjects() {
         type: newProject.type || null,
         videoLink: newProject.videoLink || null,
         images: uploadedImages,
+        amenities: amenitiesArray,
       };
 
       let res: Response;
@@ -159,6 +180,8 @@ export default function DashboardProjects() {
       }
     } catch {
       setNotification({ type: 'error', message: 'خطأ في الاتصال بالخادم' });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -191,6 +214,7 @@ export default function DashboardProjects() {
       status: project.status,
       type: project.type || '',
       videoLink: project.videoLink || '',
+      amenities: (project.amenities || []).join(', '),
     });
     setUploadedImages(project.images || []);
     setIsModalOpen(true);
@@ -200,7 +224,7 @@ export default function DashboardProjects() {
     setIsModalOpen(false);
     setIsEditing(false);
     setEditingId(null);
-    setNewProject({ titleAr: '', locationAr: '', price: '', area: '', descriptionAr: '', status: 'متاح للبيع', type: '', videoLink: '' });
+    setNewProject({ titleAr: '', locationAr: '', price: '', area: '', descriptionAr: '', status: 'متاح للبيع', type: '', videoLink: '', amenities: '' });
     setUploadedImages([]);
   };
 
@@ -270,6 +294,46 @@ export default function DashboardProjects() {
         )}
       </AnimatePresence>
 
+      {/* Stats Cards */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="bg-[#1E293B] border border-[#D4AF37]/10 rounded-sm p-4 md:p-6">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-10 h-10 rounded-full bg-[#D4AF37]/10 flex items-center justify-center">
+              <Building2 size={20} className="text-[#D4AF37]" />
+            </div>
+            <span className="text-slate-400 text-sm">إجمالي المشاريع</span>
+          </div>
+          <p className="text-3xl font-bold text-white">{totalProjects}</p>
+        </div>
+        <div className="bg-[#1E293B] border border-emerald-500/10 rounded-sm p-4 md:p-6">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center">
+              <TrendingUp size={20} className="text-emerald-400" />
+            </div>
+            <span className="text-slate-400 text-sm">متاح للبيع</span>
+          </div>
+          <p className="text-3xl font-bold text-emerald-400">{availableCount}</p>
+        </div>
+        <div className="bg-[#1E293B] border border-amber-500/10 rounded-sm p-4 md:p-6">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center">
+              <Hammer size={20} className="text-amber-400" />
+            </div>
+            <span className="text-slate-400 text-sm">تحت الإنشاء</span>
+          </div>
+          <p className="text-3xl font-bold text-amber-400">{underConstructionCount}</p>
+        </div>
+        <div className="bg-[#1E293B] border border-slate-500/10 rounded-sm p-4 md:p-6">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-10 h-10 rounded-full bg-slate-500/10 flex items-center justify-center">
+              <Ban size={20} className="text-slate-400" />
+            </div>
+            <span className="text-slate-400 text-sm">مباع بالكامل</span>
+          </div>
+          <p className="text-3xl font-bold text-slate-400">{soldOutCount}</p>
+        </div>
+      </div>
+
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 className="text-2xl font-bold text-white mb-1">إدارة المشاريع</h2>
@@ -331,7 +395,7 @@ export default function DashboardProjects() {
                         project.status === 'متاح للبيع'
                           ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
                           : project.status === 'تحت الإنشاء'
-                          ? 'bg-blue-500/10 text-blue-400 border-blue-500/20'
+                          ? 'bg-amber-500/10 text-amber-400 border-amber-500/20'
                           : project.status === 'متاح للإيجار'
                           ? 'bg-[#D4AF37]/10 text-[#D4AF37] border-[#D4AF37]/20'
                           : 'bg-slate-500/10 text-slate-400 border-slate-500/20'
@@ -546,6 +610,19 @@ export default function DashboardProjects() {
                     </div>
                   </div>
 
+                  {/* Amenities Field */}
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-1">المرافق والخدمات</label>
+                    <input
+                      type="text"
+                      value={newProject.amenities}
+                      onChange={(e) => setNewProject({ ...newProject, amenities: e.target.value })}
+                      className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#D4AF37] focus:border-[#D4AF37] sm:text-sm p-3 transition-colors placeholder-slate-600"
+                      placeholder="أدخل المرافق مفصولة بفواصل: حمام سباحة، حدائق، أمن..."
+                    />
+                    <p className="text-slate-500 text-xs mt-1">افصل بين كل مرفق بفاصلة (,)</p>
+                  </div>
+
                   <div>
                     <label className="block text-sm font-medium text-slate-300 mb-1">رابط الفيديو (اختياري)</label>
                     <input
@@ -583,9 +660,17 @@ export default function DashboardProjects() {
                 <button
                   type="submit"
                   form="add-project-form"
-                  className="px-8 py-2.5 gold-gradient text-[#0F172A] font-bold rounded-sm shadow-premium hover:brightness-110 transition-all text-sm"
+                  disabled={isSubmitting}
+                  className="px-8 py-2.5 gold-gradient text-[#0F172A] font-bold rounded-sm shadow-premium hover:brightness-110 transition-all text-sm disabled:opacity-60 flex items-center gap-2"
                 >
-                  {isEditing ? 'تحديث المشروع' : 'حفظ المشروع'}
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 size={16} className="animate-spin" />
+                      جاري الحفظ...
+                    </>
+                  ) : (
+                    isEditing ? 'تحديث المشروع' : 'حفظ المشروع'
+                  )}
                 </button>
               </div>
             </motion.div>

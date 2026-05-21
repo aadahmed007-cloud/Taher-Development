@@ -11,6 +11,7 @@ const cairo = Cairo({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://taherdevelopment.com"),
   title: "شركة طاهر للتطوير العقاري | Taher Development",
   description:
     "نبني مستقبلك بثقة ورؤية عصرية. اكتشف أحدث مشاريعنا العقارية الفاخرة.",
@@ -20,6 +21,9 @@ export const metadata: Metadata = {
     "فيلات فاخرة",
     "شقق القاهرة الجديدة",
     "استثمار عقاري",
+    "Taher Development",
+    "real estate Egypt",
+    "luxury villas",
   ],
   icons: {
     icon: "/favicon.ico",
@@ -30,6 +34,23 @@ export const metadata: Metadata = {
       "نبني مستقبلك بثقة ورؤية عصرية. اكتشف أحدث مشاريعنا العقارية الفاخرة.",
     type: "website",
     locale: "ar_EG",
+    url: "https://taherdevelopment.com",
+    siteName: "طاهر للتطوير العقاري",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "طاهر للتطوير العقاري - مشاريع فاخرة في مصر",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "شركة طاهر للتطوير العقاري | Taher Development",
+    description:
+      "نبني مستقبلك بثقة ورؤية عصرية. اكتشف أحدث مشاريعنا العقارية الفاخرة.",
+    images: ["/og-image.jpg"],
   },
 };
 
@@ -44,6 +65,12 @@ export default function RootLayout({
         className={`${cairo.className} bg-[#0F172A] text-slate-200 antialiased selection:bg-[#D4AF37] selection:text-[#0F172A]`}
         suppressHydrationWarning
       >
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:right-4 focus:z-[9999] focus:bg-[#D4AF37] focus:text-[#0F172A] focus:px-4 focus:py-2 focus:rounded-sm focus:font-bold focus:text-sm"
+        >
+          تخطي إلى المحتوى الرئيسي
+        </a>
         <AuthProvider>
           {children}
           <Toaster />

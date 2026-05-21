@@ -61,7 +61,7 @@ export default function About() {
                 {feature.icon}
               </div>
 
-              <h3 className="text-2xl font-bold text-white mb-4 group-hover:gold-text transition-colors duration-300">{feature.title}</h3>
+              <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-[#D4AF37] transition-colors duration-300">{feature.title}</h3>
               <p className="text-slate-400 leading-relaxed font-light text-sm">
                 {feature.description}
               </p>

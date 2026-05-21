@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronLeft, Quote } from 'lucide-react';
 import Image from 'next/image';
@@ -31,24 +31,50 @@ const testimonials = [
 
 export default function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
-  };
+  }, []);
 
   const prevSlide = () => {
     setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
   };
 
-  useEffect(() => {
-    const timer = setInterval(() => {
+  const startTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
       nextSlide();
     }, 6000);
-    return () => clearInterval(timer);
-  }, [currentIndex]);
+  }, [nextSlide]);
+
+  const pauseTimer = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    startTimer();
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [currentIndex, startTimer]);
+
+  const handleMouseEnter = () => pauseTimer();
+  const handleMouseLeave = () => startTimer();
+  const handleFocus = () => pauseTimer();
+  const handleBlur = () => startTimer();
 
   return (
-    <section className="py-24 bg-[#0A0F1C] font-cairo border-y border-[#D4AF37]/10 relative overflow-hidden">
+    <section
+      className="py-24 bg-[#0A0F1C] font-cairo border-y border-[#D4AF37]/10 relative overflow-hidden"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+    >
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#D4AF37]/5 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/3"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

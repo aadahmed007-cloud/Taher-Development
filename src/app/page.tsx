@@ -12,7 +12,6 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 60; // Revalidate every 60 seconds
 
 async function getProjects() {
   try {
@@ -38,7 +37,7 @@ export default async function Home() {
   const projects = await getProjects();
 
   return (
-    <main className="min-h-screen bg-[#0F172A] font-cairo">
+    <main id="main-content" className="min-h-screen bg-[#0F172A] font-cairo">
       <Navbar />
       <Hero />
       <About />

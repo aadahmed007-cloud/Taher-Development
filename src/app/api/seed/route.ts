@@ -1,7 +1,7 @@
 // ============================================
 // /api/seed - Database Seeding Endpoint
 // Creates initial admin user and sample projects
-// Run once: GET /api/seed
+// DEV ONLY - Blocked in production via middleware
 // ============================================
 
 import { NextResponse } from "next/server";
@@ -9,6 +9,14 @@ import { db } from "@/lib/db";
 import bcrypt from "bcryptjs";
 
 export async function GET() {
+  // Extra production check (also enforced by middleware)
+  if (process.env.NODE_ENV === "production") {
+    return NextResponse.json(
+      { error: "هذه الخدمة غير متاحة في بيئة الإنتاج" },
+      { status: 403 }
+    );
+  }
+
   try {
     // Check if admin user already exists
     const existingAdmin = await db.user.findUnique({
@@ -22,9 +30,10 @@ export async function GET() {
       });
     }
 
-    // Create admin user with hashed password
+    // Create admin user with hashed password from env or default
+    const adminPassword = process.env.ADMIN_SEED_PASSWORD || "Taher@Admin2024";
     const saltRounds = 12;
-    const hashedPassword = await bcrypt.hash("Taher@Admin2024", saltRounds);
+    const hashedPassword = await bcrypt.hash(adminPassword, saltRounds);
 
     const admin = await db.user.create({
       data: {
@@ -36,7 +45,7 @@ export async function GET() {
       },
     });
 
-    // Seed initial projects
+    // Seed initial projects (same as before but without exposing password)
     const projects = [
       {
         titleAr: "مجمع طاهر الفاخر",
@@ -105,7 +114,7 @@ export async function GET() {
         ]),
         amenities: JSON.stringify([
           "نادي اجتماعي فاخر",
-          "بحيرات صنائية",
+          "بحيرات صناعية",
           "مسارات مشي ودراجات",
           "منطقة تجارية داخلية",
           "أمن متقدم كبائن دخول",
@@ -269,15 +278,15 @@ export async function GET() {
       message: "تم إنشاء البيانات الأساسية بنجاح",
       admin: { id: admin.id, email: admin.email, username: admin.username },
       projectsCount: projects.length,
-      credentials: {
-        email: "admin@taher.com",
-        password: "Taher@Admin2024",
-      },
+      // NOTE: Never expose credentials in API responses
     });
   } catch (error) {
     console.error("[SEED_ERROR]", error);
+    const message = process.env.NODE_ENV === "development"
+      ? String(error)
+      : "خطأ في إنشاء البيانات الأساسية";
     return NextResponse.json(
-      { error: "خطأ في إنشاء البيانات الأساسية", details: String(error) },
+      { error: "خطأ في إنشاء البيانات الأساسية", details: message },
       { status: 500 }
     );
   }

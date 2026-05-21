@@ -107,7 +107,7 @@ export default function Contact() {
                 <div>
                   <label className="block text-slate-400 text-xs font-semibold uppercase tracking-widest mb-2">رقم الهاتف</label>
                   <input
-                    type="text"
+                    type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className="w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm px-4 py-3 focus:outline-none focus:border-[#D4AF37] transition-colors shadow-inner text-right"
@@ -226,7 +226,8 @@ export default function Contact() {
             {/* Map */}
             <div className="w-full h-48 rounded-sm overflow-hidden border border-[#D4AF37]/30 shadow-premium relative">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.642954157121!2d31.47271457639598!3d30.047098425268487!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145822c95350c33d%3A0xeab50d4f13ca8fd!2sNew%20Cairo%20City%2C%20Cairo%20Governorate%2C%20Egypt!5e0!3m2!1sen!2sus!4v1716301234567!5m2!1sen!2sus"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.642954157121!2d31.47271457639598!3d30.047098425268487!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145822c95350c33d%3A0xeab50d4f13ca8fd!2sNew%20Cairo%20City%2C%20Cairo%20Governorate%2C%20Egypt!5e0!3m2!1sar!2seg!4v1716301234567!5m2!1sar!2seg"
+                title="موقع شركة طاهر للتطوير العقاري على خريطة القاهرة الجديدة"
                 className="w-full h-full grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
                 style={{ border: 0 }}
                 allowFullScreen
