@@ -1,18 +1,14 @@
-taher-development.com, www.taher-development.com {
-    reverse_proxy localhost:3000 {
-        header_up Host {host}
-        header_up X-Forwarded-For {remote_host}
-        header_up X-Forwarded-Proto {scheme}
-        header_up X-Real-IP {remote_host}
-    }
+# Preview domain
+preview-742928.space.chatglm.site {
+	reverse_proxy localhost:3000
 }
 
-# Development fallback (no domain)
+# Custom domain
+taher-development.com, www.taher-development.com {
+	reverse_proxy localhost:3000
+}
+
+# Development fallback
 :81 {
-    reverse_proxy localhost:3000 {
-        header_up Host {host}
-        header_up X-Forwarded-For {remote_host}
-        header_up X-Forwarded-Proto {scheme}
-        header_up X-Real-IP {remote_host}
-    }
+	reverse_proxy localhost:3000
 }
