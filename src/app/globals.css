@@ -1,30 +1,386 @@
 @import "tailwindcss";
 
-@layer utilities {
-  .gold-gradient { background: linear-gradient(135deg, #D4AF37 0%, #F1D592 50%, #D4AF37 100%); }
-  .gold-text { color: #D4AF37; }
-  .gold-border { border-color: #D4AF37; }
-  .shadow-premium { box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 20px rgba(212, 175, 55, 0.1); }
-  .font-cairo { font-family: var(--font-cairo), sans-serif; }
+/* ============================================
+   Design System: Taher Development
+   Rich Dark Theme with Warm Gold Accents
+   ============================================ */
+
+@theme {
+  --color-gold: #C8A84E;
+  --color-gold-light: #E8D48B;
+  --color-gold-dark: #9A7B2E;
+  --color-navy: #080C18;
+  --color-navy-light: #111827;
+  --color-navy-mid: #1A2236;
+  --color-navy-surface: #1E293B;
+  --color-gold-border: rgba(200, 168, 78, 0.15);
+  --color-gold-border-strong: rgba(200, 168, 78, 0.35);
 }
 
-/* Custom Scrollbar - Webkit (Chrome, Safari, Edge) */
-.custom-scrollbar::-webkit-scrollbar {
+/* ============================================
+   Base Styles
+   ============================================ */
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background-color: #C8A84E;
+  color: #080C18;
+}
+
+/* ============================================
+   Custom Scrollbar
+   ============================================ */
+::-webkit-scrollbar {
   width: 6px;
 }
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: #0F172A;
+
+::-webkit-scrollbar-track {
+  background: #080C18;
 }
-.custom-scrollbar::-webkit-scrollbar-thumb {
+
+::-webkit-scrollbar-thumb {
   background: #334155;
   border-radius: 3px;
 }
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C8A84E;
 }
 
-/* Custom Scrollbar - Firefox */
-.custom-scrollbar {
+* {
   scrollbar-width: thin;
-  scrollbar-color: #334155 #0F172A;
+  scrollbar-color: #334155 #080C18;
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+@layer utilities {
+  /* Gold Gradients */
+  .gold-gradient {
+    background: linear-gradient(135deg, #9A7B2E 0%, #C8A84E 30%, #E8D48B 50%, #C8A84E 70%, #9A7B2E 100%);
+  }
+
+  .gold-gradient-text {
+    background: linear-gradient(135deg, #C8A84E 0%, #E8D48B 50%, #C8A84E 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gold-gradient-subtle {
+    background: linear-gradient(135deg, rgba(200, 168, 78, 0.1) 0%, rgba(232, 212, 139, 0.05) 100%);
+  }
+
+  /* Text Colors */
+  .gold-text {
+    color: #C8A84E;
+  }
+
+  .gold-text-light {
+    color: #E8D48B;
+  }
+
+  .gold-text-dark {
+    color: #9A7B2E;
+  }
+
+  /* Border Colors */
+  .gold-border {
+    border-color: #C8A84E;
+  }
+
+  .gold-border-subtle {
+    border-color: rgba(200, 168, 78, 0.15);
+  }
+
+  /* Shadows */
+  .shadow-gold {
+    box-shadow: 0 0 20px rgba(200, 168, 78, 0.15);
+  }
+
+  .shadow-gold-lg {
+    box-shadow: 0 0 40px rgba(200, 168, 78, 0.2), 0 0 80px rgba(200, 168, 78, 0.05);
+  }
+
+  .shadow-premium {
+    box-shadow:
+      0 20px 50px rgba(0, 0, 0, 0.5),
+      0 0 20px rgba(200, 168, 78, 0.08);
+  }
+
+  .shadow-card {
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.3),
+      0 10px 30px -5px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Glass Morphism */
+  .glass {
+    background: rgba(17, 24, 39, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .glass-strong {
+    background: rgba(17, 24, 39, 0.8);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+
+  .glass-card {
+    background: rgba(26, 34, 54, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(200, 168, 78, 0.12);
+  }
+
+  /* Font */
+  .font-cairo {
+    font-family: var(--font-cairo), sans-serif;
+  }
+
+  /* Gradient Overlays */
+  .overlay-dark {
+    background: linear-gradient(
+      180deg,
+      rgba(8, 12, 24, 0.4) 0%,
+      rgba(8, 12, 24, 0.7) 50%,
+      rgba(8, 12, 24, 0.95) 100%
+    );
+  }
+
+  .overlay-gradient {
+    background: linear-gradient(
+      135deg,
+      rgba(8, 12, 24, 0.9) 0%,
+      rgba(8, 12, 24, 0.6) 50%,
+      rgba(8, 12, 24, 0.8) 100%
+    );
+  }
+
+  /* Decorative Lines */
+  .gold-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #C8A84E, transparent);
+  }
+
+  .gold-line-right {
+    height: 1px;
+    background: linear-gradient(90deg, #C8A84E, transparent);
+  }
+
+  .gold-line-left {
+    height: 1px;
+    background: linear-gradient(270deg, #C8A84E, transparent);
+  }
+
+  /* Section Backgrounds */
+  .section-dark {
+    background-color: #080C18;
+  }
+
+  .section-navy {
+    background-color: #0D1321;
+  }
+
+  .section-surface {
+    background-color: #111827;
+  }
+}
+
+/* ============================================
+   Animation Keyframes
+   ============================================ */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-30px) rotate(3deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(200, 168, 78, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(200, 168, 78, 0.4), 0 0 40px rgba(200, 168, 78, 0.1);
+  }
+}
+
+@keyframes bounce-gentle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes spin-slow {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes scale-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Animation Utility Classes */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-bounce-gentle {
+  animation: bounce-gentle 2s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+/* ============================================
+   Custom Component Styles
+   ============================================ */
+
+/* Floating Label Input */
+.floating-label-group {
+  position: relative;
+}
+
+.floating-label-group input,
+.floating-label-group textarea {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.floating-label-group input:focus,
+.floating-label-group textarea:focus {
+  border-color: #C8A84E;
+  box-shadow: 0 0 0 3px rgba(200, 168, 78, 0.1);
+}
+
+.floating-label-group label {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  color: #64748B;
+  font-size: 14px;
+}
+
+.floating-label-group textarea ~ label {
+  top: 16px;
+  transform: none;
+}
+
+.floating-label-group input:focus ~ label,
+.floating-label-group input:not(:placeholder-shown) ~ label {
+  top: -8px;
+  right: 12px;
+  transform: none;
+  font-size: 11px;
+  color: #C8A84E;
+  background-color: #111827;
+  padding: 0 6px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.floating-label-group textarea:focus ~ label,
+.floating-label-group textarea:not(:placeholder-shown) ~ label {
+  top: -8px;
+  right: 12px;
+  font-size: 11px;
+  color: #C8A84E;
+  background-color: #111827;
+  padding: 0 6px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
 }

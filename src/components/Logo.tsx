@@ -4,14 +4,14 @@ import React, { useId } from 'react';
 
 export default function Logo({ className = "h-12" }: { className?: string }) {
   const id = useId();
-  const gradientId = `copper-gradient-${id}`;
+  const gradientId = `gold-gradient-${id}`;
 
   return (
-    <div className={`flex items-center gap-4 ${className}`}>
+    <div className={`flex items-center gap-3 ${className}`}>
       {/* Arabic Text */}
       <div className="flex flex-col items-end hidden sm:flex">
-        <span className="text-2xl font-black text-white leading-none tracking-tight">طاهر</span>
-        <span className="text-xs font-bold text-white uppercase tracking-widest mt-1">للتطوير العقاري</span>
+        <span className="text-xl font-black gold-gradient-text leading-none tracking-tight">طاهر</span>
+        <span className="text-[10px] font-semibold text-slate-300 uppercase tracking-[0.2em] mt-1.5">للتطوير العقاري</span>
       </div>
 
       {/* Center Icon */}
@@ -38,23 +38,23 @@ export default function Logo({ className = "h-12" }: { className?: string }) {
         </g>
         <defs>
           <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="140" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#b67151" />
-            <stop offset="0.5" stopColor="#a35f42" />
-            <stop offset="1" stopColor="#8d4b32" />
+            <stop stopColor="#9A7B2E" />
+            <stop offset="0.5" stopColor="#C8A84E" />
+            <stop offset="1" stopColor="#E8D48B" />
           </linearGradient>
         </defs>
       </svg>
 
       {/* English Text */}
       <div className="flex flex-col items-start hidden sm:flex">
-        <span className="text-2xl font-black text-white leading-none tracking-tight">TAHER</span>
-        <span className="text-[10px] font-bold text-white uppercase tracking-widest mt-1">Developments Company</span>
+        <span className="text-xl font-black gold-gradient-text leading-none tracking-tight">TAHER</span>
+        <span className="text-[9px] font-semibold text-slate-400 uppercase tracking-[0.15em] mt-1.5">Developments Company</span>
       </div>
 
       {/* Mobile Text */}
       <div className="flex flex-col items-center sm:hidden">
-        <span className="text-xl font-black text-white leading-none">TAHER</span>
-        <span className="text-[9px] font-bold text-white uppercase tracking-widest mt-1">طاهر العقارية</span>
+        <span className="text-lg font-black gold-gradient-text leading-none">TAHER</span>
+        <span className="text-[8px] font-semibold text-slate-400 uppercase tracking-widest mt-1">طاهر العقارية</span>
       </div>
     </div>
   );

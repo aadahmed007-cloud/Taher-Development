@@ -60,14 +60,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl" className="scroll-smooth">
+    <html lang="ar" dir="rtl" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${cairo.className} bg-[#0F172A] text-slate-200 antialiased selection:bg-[#D4AF37] selection:text-[#0F172A]`}
+        className={`${cairo.className} bg-[#080C18] text-slate-200 antialiased`}
         suppressHydrationWarning
       >
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:right-4 focus:z-[9999] focus:bg-[#D4AF37] focus:text-[#0F172A] focus:px-4 focus:py-2 focus:rounded-sm focus:font-bold focus:text-sm"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:right-4 focus:z-[9999] focus:bg-[#C8A84E] focus:text-[#080C18] focus:px-4 focus:py-2 focus:rounded-xl focus:font-bold focus:text-sm"
         >
           تخطي إلى المحتوى الرئيسي
         </a>
