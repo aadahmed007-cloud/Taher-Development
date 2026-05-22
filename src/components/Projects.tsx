@@ -64,7 +64,7 @@ function ProjectCarousel({
       <div
         className="flex h-full transition-transform duration-500 ease-out"
         dir="ltr"
-        style={{ transform: `translateX(${currentIndex * 100}%)` }}
+        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
         {images.map((img, idx) => (
           <div key={idx} className="relative w-full h-full flex-shrink-0">

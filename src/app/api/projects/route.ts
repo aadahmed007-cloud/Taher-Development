@@ -6,8 +6,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { requireAdmin } from "@/lib/auth-guard";
 import { projectCreateSchema } from "@/lib/validations";
 
 // Allowed project status values
@@ -71,13 +70,8 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     // Verify admin session
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json(
-        { error: "غير مصرح بالوصول. يرجى تسجيل الدخول أولاً." },
-        { status: 401 }
-      );
-    }
+    const { session, error: authError } = await requireAdmin();
+    if (authError) return authError;
 
     const body = await request.json();
 

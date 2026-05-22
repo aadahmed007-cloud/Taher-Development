@@ -157,7 +157,7 @@ export default function MessagesPage() {
           <p className="text-slate-400 text-sm">
             استعرض رسائل العملاء والاستفسارات
             {unreadCount > 0 && (
-              <span className="text-[#D4AF37] font-bold mr-2">({unreadCount} جديد)</span>
+              <span className="text-[#C8A84E] font-bold mr-2">({unreadCount} جديد)</span>
             )}
           </p>
         </div>
@@ -171,9 +171,9 @@ export default function MessagesPage() {
       </div>
 
       {/* Search Bar & Filter Tabs */}
-      <div className="bg-[#1E293B] border border-[#D4AF37]/10 rounded-sm shadow-premium overflow-hidden">
+      <div className="bg-[#1E293B] border border-[#C8A84E]/10 rounded-sm shadow-premium overflow-hidden">
         {/* Search */}
-        <div className="p-4 border-b border-[#D4AF37]/10 bg-[#0F172A]/50">
+        <div className="p-4 border-b border-[#C8A84E]/10 bg-[#0F172A]/50">
           <div className="relative w-full max-w-md">
             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
               <Search size={16} className="text-slate-500" />
@@ -183,27 +183,27 @@ export default function MessagesPage() {
               placeholder="ابحث في الرسائل..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="block w-full pr-10 bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#D4AF37] focus:border-[#D4AF37] sm:text-sm py-2 transition-colors placeholder-slate-500"
+              className="block w-full pr-10 bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#C8A84E] focus:border-[#C8A84E] sm:text-sm py-2 transition-colors placeholder-slate-500"
             />
           </div>
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex border-b border-[#D4AF37]/10 bg-[#0F172A]/30">
+        <div className="flex border-b border-[#C8A84E]/10 bg-[#0F172A]/30">
           {filterTabs.map((tab) => (
             <button
               key={tab.key}
               onClick={() => setActiveFilter(tab.key)}
               className={`px-5 py-3 text-sm font-bold transition-all duration-200 border-b-2 ${
                 activeFilter === tab.key
-                  ? 'text-[#D4AF37] border-[#D4AF37]'
+                  ? 'text-[#C8A84E] border-[#C8A84E]'
                   : 'text-slate-400 border-transparent hover:text-slate-200'
               }`}
             >
               {tab.label}
               {tab.count !== undefined && (
                 <span className={`mr-2 text-xs ${
-                  activeFilter === tab.key ? 'text-[#D4AF37]/70' : 'text-slate-500'
+                  activeFilter === tab.key ? 'text-[#C8A84E]/70' : 'text-slate-500'
                 }`}>
                   ({tab.count})
                 </span>
@@ -215,7 +215,7 @@ export default function MessagesPage() {
         {/* Messages List */}
         {isLoading ? (
           <div className="min-h-[400px] flex items-center justify-center">
-            <Loader2 size={32} className="animate-spin text-[#D4AF37]" />
+            <Loader2 size={32} className="animate-spin text-[#C8A84E]" />
           </div>
         ) : filteredLeads.length === 0 ? (
           <div className="min-h-[400px] flex items-center justify-center">
@@ -235,7 +235,7 @@ export default function MessagesPage() {
             </div>
           </div>
         ) : (
-          <div className="divide-y divide-[#D4AF37]/5 max-h-[600px] overflow-y-auto custom-scrollbar">
+          <div className="divide-y divide-[#C8A84E]/5 max-h-[600px] overflow-y-auto custom-scrollbar">
             <AnimatePresence>
               {filteredLeads.map((lead) => (
                 <motion.div
@@ -243,8 +243,8 @@ export default function MessagesPage() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className={`cursor-pointer transition-all hover:bg-[#D4AF37]/[0.03] ${
-                    lead.isRead ? 'bg-[#1E293B]' : 'bg-[#1E293B] border-r-2 border-r-[#D4AF37]'
+                  className={`cursor-pointer transition-all hover:bg-[#C8A84E]/[0.03] ${
+                    lead.isRead ? 'bg-[#1E293B]' : 'bg-[#1E293B] border-r-2 border-r-[#C8A84E]'
                   }`}
                   onClick={() => {
                     setSelectedLead(lead);
@@ -253,7 +253,7 @@ export default function MessagesPage() {
                 >
                   <div className="p-4 md:p-6 flex items-start gap-4">
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
-                      lead.isRead ? 'bg-slate-800 text-slate-500' : 'bg-[#D4AF37]/10 text-[#D4AF37]'
+                      lead.isRead ? 'bg-slate-800 text-slate-500' : 'bg-[#C8A84E]/10 text-[#C8A84E]'
                     }`}>
                       {lead.isRead ? <MailOpen size={20} /> : <Mail size={20} />}
                     </div>
@@ -268,7 +268,7 @@ export default function MessagesPage() {
                       <p className="text-slate-500 text-xs truncate">{lead.message}</p>
                     </div>
                     {!lead.isRead && (
-                      <div className="w-2 h-2 rounded-full bg-[#D4AF37] shrink-0 mt-2"></div>
+                      <div className="w-2 h-2 rounded-full bg-[#C8A84E] shrink-0 mt-2"></div>
                     )}
                   </div>
                 </motion.div>
@@ -293,7 +293,7 @@ export default function MessagesPage() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-lg bg-[#1E293B] rounded-sm shadow-premium border border-[#D4AF37]/30 p-6"
+              className="relative w-full max-w-lg bg-[#1E293B] rounded-sm shadow-premium border border-[#C8A84E]/30 p-6"
             >
               <h3 className="text-xl font-bold text-white mb-4">تفاصيل الرسالة</h3>
               <div className="space-y-4">
@@ -324,7 +324,7 @@ export default function MessagesPage() {
                 {!selectedLead.isRead && (
                   <button
                     onClick={() => markAsRead(selectedLead.id)}
-                    className="w-full px-6 py-2.5 border border-[#D4AF37]/30 text-[#D4AF37] font-bold rounded-sm hover:bg-[#D4AF37]/10 transition-colors text-sm flex items-center justify-center gap-2"
+                    className="w-full px-6 py-2.5 border border-[#C8A84E]/30 text-[#C8A84E] font-bold rounded-sm hover:bg-[#C8A84E]/10 transition-colors text-sm flex items-center justify-center gap-2"
                   >
                     <MailOpen size={16} />
                     تعليم كمقروء

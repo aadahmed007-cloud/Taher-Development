@@ -119,7 +119,7 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      <div className="bg-[#1E293B] border border-[#D4AF37]/10 rounded-sm shadow-premium overflow-hidden p-6 md:p-10">
+      <div className="bg-[#1E293B] border border-[#C8A84E]/10 rounded-sm shadow-premium overflow-hidden p-6 md:p-10">
         <div className="max-w-2xl">
           <h3 className="text-xl text-white font-bold mb-6">إعدادات الحساب</h3>
 
@@ -130,7 +130,7 @@ export default function SettingsPage() {
                 type="text"
                 value={settings.name}
                 onChange={(e) => setSettings({ ...settings, name: e.target.value })}
-                className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#D4AF37] focus:border-[#D4AF37] sm:text-sm p-3 transition-colors"
+                className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#C8A84E] focus:border-[#C8A84E] sm:text-sm p-3 transition-colors"
               />
             </div>
 
@@ -140,7 +140,7 @@ export default function SettingsPage() {
                 type="email"
                 value={settings.email}
                 onChange={(e) => setSettings({ ...settings, email: e.target.value })}
-                className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#D4AF37] focus:border-[#D4AF37] sm:text-sm p-3 transition-colors"
+                className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#C8A84E] focus:border-[#C8A84E] sm:text-sm p-3 transition-colors"
                 dir="ltr"
               />
             </div>
@@ -155,7 +155,7 @@ export default function SettingsPage() {
                     type="password"
                     value={settings.currentPassword}
                     onChange={(e) => setSettings({ ...settings, currentPassword: e.target.value })}
-                    className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#D4AF37] focus:border-[#D4AF37] sm:text-sm p-3 transition-colors"
+                    className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#C8A84E] focus:border-[#C8A84E] sm:text-sm p-3 transition-colors"
                     dir="ltr"
                   />
                 </div>
@@ -167,7 +167,7 @@ export default function SettingsPage() {
                       type="password"
                       value={settings.newPassword}
                       onChange={(e) => setSettings({ ...settings, newPassword: e.target.value })}
-                      className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#D4AF37] focus:border-[#D4AF37] sm:text-sm p-3 transition-colors"
+                      className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#C8A84E] focus:border-[#C8A84E] sm:text-sm p-3 transition-colors"
                       dir="ltr"
                     />
                     {settings.newPassword && settings.newPassword.length < 8 && (
@@ -180,7 +180,7 @@ export default function SettingsPage() {
                       type="password"
                       value={settings.confirmPassword}
                       onChange={(e) => setSettings({ ...settings, confirmPassword: e.target.value })}
-                      className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#D4AF37] focus:border-[#D4AF37] sm:text-sm p-3 transition-colors"
+                      className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#C8A84E] focus:border-[#C8A84E] sm:text-sm p-3 transition-colors"
                       dir="ltr"
                     />
                     {settings.confirmPassword && settings.newPassword !== settings.confirmPassword && (

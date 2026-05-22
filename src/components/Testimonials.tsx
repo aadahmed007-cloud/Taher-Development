@@ -52,9 +52,19 @@ export default function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [direction, setDirection] = useState(0);
+  const [itemsPerView, setItemsPerView] = useState(1);
 
-  const itemsPerView = typeof window !== 'undefined' && window.innerWidth >= 768 ? 3 : 1;
   const maxIndex = Math.max(0, testimonials.length - itemsPerView);
+
+  // Update itemsPerView on client side to avoid SSR mismatch
+  useEffect(() => {
+    const updateItemsPerView = () => {
+      setItemsPerView(window.innerWidth >= 768 ? 3 : 1);
+    };
+    updateItemsPerView();
+    window.addEventListener('resize', updateItemsPerView);
+    return () => window.removeEventListener('resize', updateItemsPerView);
+  }, []);
 
   const nextSlide = useCallback(() => {
     setDirection(1);

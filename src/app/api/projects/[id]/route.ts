@@ -7,8 +7,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { requireAdmin } from "@/lib/auth-guard";
 import { unlink } from "fs/promises";
 import path from "path";
 
@@ -100,13 +99,8 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json(
-        { error: "غير مصرح بالوصول. يرجى تسجيل الدخول أولاً." },
-        { status: 401 }
-      );
-    }
+    const { session, error: authError } = await requireAdmin();
+    if (authError) return authError;
 
     const { id } = await params;
     const body = await request.json();
@@ -177,13 +171,8 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json(
-        { error: "غير مصرح بالوصول. يرجى تسجيل الدخول أولاً." },
-        { status: 401 }
-      );
-    }
+    const { session, error: authError } = await requireAdmin();
+    if (authError) return authError;
 
     const { id } = await params;
 

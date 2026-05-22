@@ -22,7 +22,7 @@ export default function NotFound() {
           </Link>
           <a
             href="#contact"
-            className="px-10 py-4 border gold-border gold-text font-bold rounded-sm hover:bg-[#D4AF37]/10 transition-all"
+            className="px-10 py-4 border gold-border gold-text font-bold rounded-sm hover:bg-[#C8A84E]/10 transition-all"
           >
             تواصل معنا
           </a>

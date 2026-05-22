@@ -181,11 +181,11 @@ function ProjectImageCarousel({ images, title }: { images: string[]; title: stri
               dots.forEach((d, i) => {
                 (d as HTMLElement).className =
                   i === nextIdx
-                    ? "h-2 w-6 rounded-full bg-[#D4AF37] transition-all duration-300"
+                    ? "h-2 w-6 rounded-full bg-[#C8A84E] transition-all duration-300"
                     : "h-2 w-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300";
               });
             }}
-            className="absolute top-1/2 -translate-y-1/2 right-4 w-12 h-12 rounded-full bg-black/50 border border-white/20 text-white flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 hover:bg-[#D4AF37] hover:text-[#0F172A] hover:scale-110 z-10"
+            className="absolute top-1/2 -translate-y-1/2 right-4 w-12 h-12 rounded-full bg-black/50 border border-white/20 text-white flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 hover:bg-[#C8A84E] hover:text-[#0F172A] hover:scale-110 z-10"
             aria-label="الصورة السابقة"
           >
             <ChevronRight size={24} />
@@ -206,11 +206,11 @@ function ProjectImageCarousel({ images, title }: { images: string[]; title: stri
               dots.forEach((d, i) => {
                 (d as HTMLElement).className =
                   i === nextIdx
-                    ? "h-2 w-6 rounded-full bg-[#D4AF37] transition-all duration-300"
+                    ? "h-2 w-6 rounded-full bg-[#C8A84E] transition-all duration-300"
                     : "h-2 w-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300";
               });
             }}
-            className="absolute top-1/2 -translate-y-1/2 left-4 w-12 h-12 rounded-full bg-black/50 border border-white/20 text-white flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 hover:bg-[#D4AF37] hover:text-[#0F172A] hover:scale-110 z-10"
+            className="absolute top-1/2 -translate-y-1/2 left-4 w-12 h-12 rounded-full bg-black/50 border border-white/20 text-white flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 hover:bg-[#C8A84E] hover:text-[#0F172A] hover:scale-110 z-10"
             aria-label="الصورة التالية"
           >
             <ChevronLeft size={24} />
@@ -231,13 +231,13 @@ function ProjectImageCarousel({ images, title }: { images: string[]; title: stri
                   dots.forEach((d, i) => {
                     (d as HTMLElement).className =
                       i === idx
-                        ? "h-2 w-6 rounded-full bg-[#D4AF37] transition-all duration-300"
+                        ? "h-2 w-6 rounded-full bg-[#C8A84E] transition-all duration-300"
                         : "h-2 w-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300";
                   });
                 }}
                 className={
                   idx === 0
-                    ? "h-2 w-6 rounded-full bg-[#D4AF37] transition-all duration-300"
+                    ? "h-2 w-6 rounded-full bg-[#C8A84E] transition-all duration-300"
                     : "h-2 w-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300"
                 }
                 aria-label={`الذهاب للصورة ${idx + 1}`}
@@ -277,7 +277,7 @@ export default async function ProjectDetailPage({
             <li>
               <Link
                 href="/"
-                className="text-slate-400 hover:text-[#D4AF37] transition-colors"
+                className="text-slate-400 hover:text-[#C8A84E] transition-colors"
               >
                 الرئيسية
               </Link>
@@ -286,13 +286,13 @@ export default async function ProjectDetailPage({
             <li>
               <Link
                 href="/#projects"
-                className="text-slate-400 hover:text-[#D4AF37] transition-colors"
+                className="text-slate-400 hover:text-[#C8A84E] transition-colors"
               >
                 المشاريع
               </Link>
             </li>
             <li className="text-slate-600">/</li>
-            <li className="text-[#D4AF37] font-medium">{project.titleAr}</li>
+            <li className="text-[#C8A84E] font-medium">{project.titleAr}</li>
           </ol>
         </div>
       </nav>
@@ -307,12 +307,12 @@ export default async function ProjectDetailPage({
               </h1>
               <div className="flex flex-wrap items-center gap-4 text-slate-400">
                 <div className="flex items-center gap-2">
-                  <MapPin size={18} className="text-[#D4AF37]" />
+                  <MapPin size={18} className="text-[#C8A84E]" />
                   <span className="font-light">{project.locationAr}</span>
                 </div>
                 {project.type && (
                   <div className="flex items-center gap-2">
-                    <Tag size={18} className="text-[#D4AF37]" />
+                    <Tag size={18} className="text-[#C8A84E]" />
                     <span className="font-light">{project.type}</span>
                   </div>
                 )}
@@ -348,7 +348,7 @@ export default async function ProjectDetailPage({
                     dots.forEach((d, i) => {
                       (d as HTMLElement).className =
                         i === idx
-                          ? "h-2 w-6 rounded-full bg-[#D4AF37] transition-all duration-300"
+                          ? "h-2 w-6 rounded-full bg-[#C8A84E] transition-all duration-300"
                           : "h-2 w-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300";
                     });
                     // Scroll carousel into view
@@ -356,7 +356,7 @@ export default async function ProjectDetailPage({
                       .getElementById("main-carousel")
                       ?.scrollIntoView({ behavior: "smooth" });
                   }}
-                  className="relative w-20 h-16 md:w-28 md:h-20 flex-shrink-0 rounded-sm overflow-hidden border-2 border-transparent hover:border-[#D4AF37] transition-all duration-300 opacity-70 hover:opacity-100"
+                  className="relative w-20 h-16 md:w-28 md:h-20 flex-shrink-0 rounded-sm overflow-hidden border-2 border-transparent hover:border-[#C8A84E] transition-all duration-300 opacity-70 hover:opacity-100"
                 >
                   <Image
                     src={img}
@@ -374,30 +374,30 @@ export default async function ProjectDetailPage({
 
         {/* Key Info Bar */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10 md:mb-14">
-          <div className="bg-[#1E293B] border border-slate-800 rounded-sm p-5 text-center hover:border-[#D4AF37]/30 transition-colors">
-            <Tag size={24} className="mx-auto text-[#D4AF37] mb-2" />
+          <div className="bg-[#1E293B] border border-slate-800 rounded-sm p-5 text-center hover:border-[#C8A84E]/30 transition-colors">
+            <Tag size={24} className="mx-auto text-[#C8A84E] mb-2" />
             <p className="text-slate-400 text-xs mb-1">السعر</p>
             <p className="text-white font-bold text-lg" dir="ltr">
               {project.price}
             </p>
           </div>
           {project.area && (
-            <div className="bg-[#1E293B] border border-slate-800 rounded-sm p-5 text-center hover:border-[#D4AF37]/30 transition-colors">
-              <Ruler size={24} className="mx-auto text-[#D4AF37] mb-2" />
+            <div className="bg-[#1E293B] border border-slate-800 rounded-sm p-5 text-center hover:border-[#C8A84E]/30 transition-colors">
+              <Ruler size={24} className="mx-auto text-[#C8A84E] mb-2" />
               <p className="text-slate-400 text-xs mb-1">المساحة</p>
               <p className="text-white font-bold text-lg" dir="ltr">
                 {project.area}
               </p>
             </div>
           )}
-          <div className="bg-[#1E293B] border border-slate-800 rounded-sm p-5 text-center hover:border-[#D4AF37]/30 transition-colors">
-            <CalendarDays size={24} className="mx-auto text-[#D4AF37] mb-2" />
+          <div className="bg-[#1E293B] border border-slate-800 rounded-sm p-5 text-center hover:border-[#C8A84E]/30 transition-colors">
+            <CalendarDays size={24} className="mx-auto text-[#C8A84E] mb-2" />
             <p className="text-slate-400 text-xs mb-1">الحالة</p>
             <p className="text-white font-bold text-lg">{project.status}</p>
           </div>
           {project.type && (
-            <div className="bg-[#1E293B] border border-slate-800 rounded-sm p-5 text-center hover:border-[#D4AF37]/30 transition-colors">
-              <Home size={24} className="mx-auto text-[#D4AF37] mb-2" />
+            <div className="bg-[#1E293B] border border-slate-800 rounded-sm p-5 text-center hover:border-[#C8A84E]/30 transition-colors">
+              <Home size={24} className="mx-auto text-[#C8A84E] mb-2" />
               <p className="text-slate-400 text-xs mb-1">النوع</p>
               <p className="text-white font-bold text-lg">{project.type}</p>
             </div>
@@ -410,7 +410,7 @@ export default async function ProjectDetailPage({
           <div className="lg:col-span-2 space-y-10">
             {/* Description */}
             <div>
-              <h2 className="text-2xl font-bold text-[#D4AF37] mb-4 border-b border-[#D4AF37]/20 pb-3">
+              <h2 className="text-2xl font-bold text-[#C8A84E] mb-4 border-b border-[#C8A84E]/20 pb-3">
                 وصف المشروع
               </h2>
               <p className="text-slate-300 leading-relaxed font-light text-base md:text-lg">
@@ -421,7 +421,7 @@ export default async function ProjectDetailPage({
 
             {/* Amenities */}
             <div>
-              <h2 className="text-2xl font-bold text-[#D4AF37] mb-4 border-b border-[#D4AF37]/20 pb-3">
+              <h2 className="text-2xl font-bold text-[#C8A84E] mb-4 border-b border-[#C8A84E]/20 pb-3">
                 المرافق والخدمات
               </h2>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -438,11 +438,11 @@ export default async function ProjectDetailPage({
                 ).map((amenity: string, idx: number) => (
                   <li
                     key={idx}
-                    className="flex items-center text-slate-300 font-light text-sm md:text-base bg-[#1E293B] border border-slate-800 rounded-sm p-3 hover:border-[#D4AF37]/30 transition-colors"
+                    className="flex items-center text-slate-300 font-light text-sm md:text-base bg-[#1E293B] border border-slate-800 rounded-sm p-3 hover:border-[#C8A84E]/30 transition-colors"
                   >
                     <Check
                       size={18}
-                      className="text-[#D4AF37] ml-3 shrink-0"
+                      className="text-[#C8A84E] ml-3 shrink-0"
                     />
                     {amenity}
                   </li>
@@ -459,7 +459,7 @@ export default async function ProjectDetailPage({
                 href={project.videoLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-3 w-full bg-[#1E293B] border border-[#D4AF37]/30 rounded-sm p-5 text-[#D4AF37] font-bold hover:bg-[#D4AF37] hover:text-[#0F172A] transition-all duration-300 group"
+                className="flex items-center justify-center gap-3 w-full bg-[#1E293B] border border-[#C8A84E]/30 rounded-sm p-5 text-[#C8A84E] font-bold hover:bg-[#C8A84E] hover:text-[#0F172A] transition-all duration-300 group"
               >
                 <Play
                   size={22}
@@ -483,7 +483,7 @@ export default async function ProjectDetailPage({
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-slate-400 text-sm">السعر</span>
-                  <span className="text-[#D4AF37] text-sm font-bold" dir="ltr">
+                  <span className="text-[#C8A84E] text-sm font-bold" dir="ltr">
                     {project.price}
                   </span>
                 </div>
@@ -518,7 +518,7 @@ export default async function ProjectDetailPage({
 
         {/* Floor Plans Section */}
         <div className="mb-10 md:mb-14">
-          <h2 className="text-2xl font-bold text-[#D4AF37] mb-6 border-b border-[#D4AF37]/20 pb-3">
+          <h2 className="text-2xl font-bold text-[#C8A84E] mb-6 border-b border-[#C8A84E]/20 pb-3">
             المخططات والمساحات
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -543,7 +543,7 @@ export default async function ProjectDetailPage({
               ) => (
                 <div
                   key={idx}
-                  className="bg-[#1E293B] border border-slate-800 rounded-sm overflow-hidden group hover:border-[#D4AF37]/30 transition-all duration-300 hover:shadow-[0_0_25px_rgba(212,175,55,0.1)]"
+                  className="bg-[#1E293B] border border-slate-800 rounded-sm overflow-hidden group hover:border-[#C8A84E]/30 transition-all duration-300 hover:shadow-[0_0_25px_rgba(212,175,55,0.1)]"
                 >
                   <div className="relative h-48 w-full overflow-hidden">
                     <Image
@@ -560,7 +560,7 @@ export default async function ProjectDetailPage({
                       {plan.name}
                     </span>
                     <span
-                      className="text-[#D4AF37] text-xs font-mono"
+                      className="text-[#C8A84E] text-xs font-mono"
                       dir="ltr"
                     >
                       {plan.area}
@@ -573,7 +573,7 @@ export default async function ProjectDetailPage({
         </div>
 
         {/* Contact CTA Section */}
-        <section className="bg-gradient-to-l from-[#1E293B] to-[#0F172A] border border-[#D4AF37]/20 rounded-sm p-8 md:p-12 text-center">
+        <section className="bg-gradient-to-l from-[#1E293B] to-[#0F172A] border border-[#C8A84E]/20 rounded-sm p-8 md:p-12 text-center">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
             مهتم بهذا المشروع؟
           </h2>
@@ -584,7 +584,7 @@ export default async function ProjectDetailPage({
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/#contact"
-              className="inline-flex items-center gap-2 bg-[#D4AF37] text-[#0F172A] font-bold px-8 py-4 rounded-sm hover:bg-[#F1D592] transition-all duration-300 text-sm md:text-base tracking-wide"
+              className="inline-flex items-center gap-2 bg-[#C8A84E] text-[#0F172A] font-bold px-8 py-4 rounded-sm hover:bg-[#F1D592] transition-all duration-300 text-sm md:text-base tracking-wide"
             >
               <Mail size={20} />
               أرسل استفسارك
@@ -592,7 +592,7 @@ export default async function ProjectDetailPage({
             </Link>
             <a
               href="tel:+201000000000"
-              className="inline-flex items-center gap-2 border border-[#D4AF37] text-[#D4AF37] font-bold px-8 py-4 rounded-sm hover:bg-[#D4AF37] hover:text-[#0F172A] transition-all duration-300 text-sm md:text-base tracking-wide"
+              className="inline-flex items-center gap-2 border border-[#C8A84E] text-[#C8A84E] font-bold px-8 py-4 rounded-sm hover:bg-[#C8A84E] hover:text-[#0F172A] transition-all duration-300 text-sm md:text-base tracking-wide"
             >
               <Phone size={20} />
               اتصل بنا الآن
@@ -604,7 +604,7 @@ export default async function ProjectDetailPage({
         <div className="mt-8 text-center">
           <Link
             href="/#projects"
-            className="inline-flex items-center gap-2 text-slate-400 hover:text-[#D4AF37] font-light transition-colors text-sm"
+            className="inline-flex items-center gap-2 text-slate-400 hover:text-[#C8A84E] font-light transition-colors text-sm"
           >
             <ArrowRight size={16} />
             العودة إلى جميع المشاريع

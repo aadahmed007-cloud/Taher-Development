@@ -296,10 +296,10 @@ export default function DashboardProjects() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-[#1E293B] border border-[#D4AF37]/10 rounded-sm p-4 md:p-6">
+        <div className="bg-[#1E293B] border border-[#C8A84E]/10 rounded-sm p-4 md:p-6">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-full bg-[#D4AF37]/10 flex items-center justify-center">
-              <Building2 size={20} className="text-[#D4AF37]" />
+            <div className="w-10 h-10 rounded-full bg-[#C8A84E]/10 flex items-center justify-center">
+              <Building2 size={20} className="text-[#C8A84E]" />
             </div>
             <span className="text-slate-400 text-sm">إجمالي المشاريع</span>
           </div>
@@ -349,9 +349,9 @@ export default function DashboardProjects() {
       </div>
 
       {/* Table Container */}
-      <div className="bg-[#1E293B] border border-[#D4AF37]/10 rounded-sm shadow-premium overflow-hidden">
+      <div className="bg-[#1E293B] border border-[#C8A84E]/10 rounded-sm shadow-premium overflow-hidden">
         {/* Toolbar */}
-        <div className="p-4 border-b border-[#D4AF37]/10 flex justify-between items-center bg-[#0F172A]/50">
+        <div className="p-4 border-b border-[#C8A84E]/10 flex justify-between items-center bg-[#0F172A]/50">
           <div className="relative w-full max-w-md">
             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
               <Search size={16} className="text-slate-500" />
@@ -361,20 +361,20 @@ export default function DashboardProjects() {
               placeholder="ابحث عن مشروع..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="block w-full pr-10 bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#D4AF37] focus:border-[#D4AF37] sm:text-sm py-2 transition-colors placeholder-slate-500"
+              className="block w-full pr-10 bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#C8A84E] focus:border-[#C8A84E] sm:text-sm py-2 transition-colors placeholder-slate-500"
             />
           </div>
         </div>
 
         {isLoading ? (
           <div className="flex items-center justify-center py-20">
-            <Loader2 size={32} className="animate-spin text-[#D4AF37]" />
+            <Loader2 size={32} className="animate-spin text-[#C8A84E]" />
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-right border-collapse">
               <thead>
-                <tr className="bg-[#0F172A]/80 border-b border-[#D4AF37]/10">
+                <tr className="bg-[#0F172A]/80 border-b border-[#C8A84E]/10">
                   <th className="p-4 text-slate-300 font-bold text-sm">اسم المشروع</th>
                   <th className="p-4 text-slate-300 font-bold text-sm">الموقع</th>
                   <th className="p-4 text-slate-300 font-bold text-sm">الحالة</th>
@@ -382,11 +382,11 @@ export default function DashboardProjects() {
                   <th className="p-4 text-slate-300 font-bold text-sm w-20">إجراء</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#D4AF37]/5">
+              <tbody className="divide-y divide-[#C8A84E]/5">
                 {filteredProjects.map((project) => (
-                  <tr key={project.id} className="hover:bg-[#D4AF37]/[0.03] transition-all duration-300 group">
+                  <tr key={project.id} className="hover:bg-[#C8A84E]/[0.03] transition-all duration-300 group">
                     <td className="p-4 relative">
-                      <div className="absolute inset-y-0 right-0 w-[3px] bg-[#D4AF37] scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center"></div>
+                      <div className="absolute inset-y-0 right-0 w-[3px] bg-[#C8A84E] scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center"></div>
                       <div className="text-white font-medium transform group-hover:-translate-x-1 transition-transform duration-300">{project.titleAr}</div>
                     </td>
                     <td className="p-4 text-slate-400 text-sm">{project.locationAr}</td>
@@ -397,7 +397,7 @@ export default function DashboardProjects() {
                           : project.status === 'تحت الإنشاء'
                           ? 'bg-amber-500/10 text-amber-400 border-amber-500/20'
                           : project.status === 'متاح للإيجار'
-                          ? 'bg-[#D4AF37]/10 text-[#D4AF37] border-[#D4AF37]/20'
+                          ? 'bg-[#C8A84E]/10 text-[#C8A84E] border-[#C8A84E]/20'
                           : 'bg-slate-500/10 text-slate-400 border-slate-500/20'
                       }`}>
                         {project.status}
@@ -407,7 +407,7 @@ export default function DashboardProjects() {
                     <td className="p-4 text-slate-400 text-sm">
                       <button
                         onClick={() => handleEdit(project)}
-                        className="text-slate-400 hover:text-[#D4AF37] transition-colors p-1"
+                        className="text-slate-400 hover:text-[#C8A84E] transition-colors p-1"
                       >
                         <Edit size={16} />
                       </button>
@@ -449,16 +449,16 @@ export default function DashboardProjects() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-3xl bg-[#1E293B] rounded-sm shadow-premium border border-[#D4AF37]/30 flex flex-col max-h-[90vh] lg:max-h-[85vh] overflow-hidden"
+              className="relative w-full max-w-3xl bg-[#1E293B] rounded-sm shadow-premium border border-[#C8A84E]/30 flex flex-col max-h-[90vh] lg:max-h-[85vh] overflow-hidden"
             >
               {/* Header */}
-              <div className="flex justify-between items-center p-6 border-b border-[#D4AF37]/10 bg-[#0F172A]">
+              <div className="flex justify-between items-center p-6 border-b border-[#C8A84E]/10 bg-[#0F172A]">
                 <h3 className="text-xl font-bold text-white">
                   {isEditing ? 'تعديل المشروع' : 'إضافة مشروع جديد'}
                 </h3>
                 <button
                   onClick={closeModal}
-                  className="text-slate-400 hover:text-[#D4AF37] transition-colors"
+                  className="text-slate-400 hover:text-[#C8A84E] transition-colors"
                 >
                   <X size={24} />
                 </button>
@@ -472,7 +472,7 @@ export default function DashboardProjects() {
                     <label className="block text-sm font-medium text-slate-300 mb-2">صور المشروع</label>
 
                     <div
-                      className={`border-2 border-dashed ${isDragging ? 'border-[#D4AF37] bg-[#D4AF37]/5' : 'border-slate-700 bg-[#0F172A]/50'} rounded-sm p-8 text-center hover:bg-[#0F172A] hover:border-[#D4AF37]/50 transition-colors cursor-pointer group relative`}
+                      className={`border-2 border-dashed ${isDragging ? 'border-[#C8A84E] bg-[#C8A84E]/5' : 'border-slate-700 bg-[#0F172A]/50'} rounded-sm p-8 text-center hover:bg-[#0F172A] hover:border-[#C8A84E]/50 transition-colors cursor-pointer group relative`}
                       onDragOver={handleDragOver}
                       onDragLeave={handleDragLeave}
                       onDrop={handleDrop}
@@ -487,9 +487,9 @@ export default function DashboardProjects() {
                       />
                       <div className="mx-auto w-16 h-16 mb-4 bg-[#1E293B] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                         {isUploading ? (
-                          <Loader2 size={28} className="text-[#D4AF37] animate-spin" />
+                          <Loader2 size={28} className="text-[#C8A84E] animate-spin" />
                         ) : (
-                          <UploadCloud size={28} className="text-[#D4AF37]" />
+                          <UploadCloud size={28} className="text-[#C8A84E]" />
                         )}
                       </div>
                       <p className="text-slate-300 font-bold mb-1">
@@ -507,7 +507,7 @@ export default function DashboardProjects() {
                               initial={{ opacity: 0, scale: 0.8 }}
                               animate={{ opacity: 1, scale: 1 }}
                               exit={{ opacity: 0, scale: 0.8 }}
-                              className="relative aspect-square rounded-sm overflow-hidden border border-[#D4AF37]/20 group"
+                              className="relative aspect-square rounded-sm overflow-hidden border border-[#C8A84E]/20 group"
                             >
                               <Image
                                 src={imageUrl}
@@ -542,7 +542,7 @@ export default function DashboardProjects() {
                         type="text"
                         value={newProject.titleAr}
                         onChange={(e) => setNewProject({ ...newProject, titleAr: e.target.value })}
-                        className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#D4AF37] focus:border-[#D4AF37] sm:text-sm p-3 transition-colors placeholder-slate-600"
+                        className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#C8A84E] focus:border-[#C8A84E] sm:text-sm p-3 transition-colors placeholder-slate-600"
                         placeholder="أدخل اسم المشروع"
                         required
                       />
@@ -553,7 +553,7 @@ export default function DashboardProjects() {
                         type="text"
                         value={newProject.locationAr}
                         onChange={(e) => setNewProject({ ...newProject, locationAr: e.target.value })}
-                        className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#D4AF37] focus:border-[#D4AF37] sm:text-sm p-3 transition-colors placeholder-slate-600"
+                        className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#C8A84E] focus:border-[#C8A84E] sm:text-sm p-3 transition-colors placeholder-slate-600"
                         placeholder="المدينة، المنطقة"
                         required
                       />
@@ -566,7 +566,7 @@ export default function DashboardProjects() {
                       <select
                         value={newProject.status}
                         onChange={(e) => setNewProject({ ...newProject, status: e.target.value })}
-                        className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#D4AF37] focus:border-[#D4AF37] sm:text-sm p-3 transition-colors appearance-none"
+                        className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#C8A84E] focus:border-[#C8A84E] sm:text-sm p-3 transition-colors appearance-none"
                       >
                         <option value="متاح للبيع">متاح للبيع</option>
                         <option value="متاح للإيجار">متاح للإيجار</option>
@@ -580,7 +580,7 @@ export default function DashboardProjects() {
                         type="text"
                         value={newProject.price}
                         onChange={(e) => setNewProject({ ...newProject, price: e.target.value })}
-                        className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#D4AF37] focus:border-[#D4AF37] sm:text-sm p-3 transition-colors placeholder-slate-600"
+                        className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#C8A84E] focus:border-[#C8A84E] sm:text-sm p-3 transition-colors placeholder-slate-600"
                         placeholder="مثال: يبدأ من 5,000,000 ج.م"
                         required
                       />
@@ -594,7 +594,7 @@ export default function DashboardProjects() {
                         type="text"
                         value={newProject.type}
                         onChange={(e) => setNewProject({ ...newProject, type: e.target.value })}
-                        className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#D4AF37] focus:border-[#D4AF37] sm:text-sm p-3 transition-colors placeholder-slate-600"
+                        className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#C8A84E] focus:border-[#C8A84E] sm:text-sm p-3 transition-colors placeholder-slate-600"
                         placeholder="سكني، تجاري، منتجع..."
                       />
                     </div>
@@ -604,7 +604,7 @@ export default function DashboardProjects() {
                         type="text"
                         value={newProject.area}
                         onChange={(e) => setNewProject({ ...newProject, area: e.target.value })}
-                        className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#D4AF37] focus:border-[#D4AF37] sm:text-sm p-3 transition-colors placeholder-slate-600"
+                        className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#C8A84E] focus:border-[#C8A84E] sm:text-sm p-3 transition-colors placeholder-slate-600"
                         placeholder="مثال: 180 - 350 م²"
                       />
                     </div>
@@ -617,7 +617,7 @@ export default function DashboardProjects() {
                       type="text"
                       value={newProject.amenities}
                       onChange={(e) => setNewProject({ ...newProject, amenities: e.target.value })}
-                      className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#D4AF37] focus:border-[#D4AF37] sm:text-sm p-3 transition-colors placeholder-slate-600"
+                      className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#C8A84E] focus:border-[#C8A84E] sm:text-sm p-3 transition-colors placeholder-slate-600"
                       placeholder="أدخل المرافق مفصولة بفواصل: حمام سباحة، حدائق، أمن..."
                     />
                     <p className="text-slate-500 text-xs mt-1">افصل بين كل مرفق بفاصلة (,)</p>
@@ -629,7 +629,7 @@ export default function DashboardProjects() {
                       type="url"
                       value={newProject.videoLink}
                       onChange={(e) => setNewProject({ ...newProject, videoLink: e.target.value })}
-                      className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#D4AF37] focus:border-[#D4AF37] sm:text-sm p-3 transition-colors placeholder-slate-600"
+                      className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#C8A84E] focus:border-[#C8A84E] sm:text-sm p-3 transition-colors placeholder-slate-600"
                       placeholder="https://www.youtube.com/embed/..."
                       dir="ltr"
                     />
@@ -640,7 +640,7 @@ export default function DashboardProjects() {
                     <textarea
                       value={newProject.descriptionAr}
                       onChange={(e) => setNewProject({ ...newProject, descriptionAr: e.target.value })}
-                      className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#D4AF37] focus:border-[#D4AF37] sm:text-sm p-3 transition-colors placeholder-slate-600"
+                      className="block w-full bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#C8A84E] focus:border-[#C8A84E] sm:text-sm p-3 transition-colors placeholder-slate-600"
                       placeholder="اكتب تفاصيل المشروع والمميزات..."
                       rows={4}
                     ></textarea>
@@ -649,7 +649,7 @@ export default function DashboardProjects() {
               </div>
 
               {/* Footer */}
-              <div className="p-4 border-t border-[#D4AF37]/10 bg-[#0F172A] flex justify-end gap-3 shrink-0">
+              <div className="p-4 border-t border-[#C8A84E]/10 bg-[#0F172A] flex justify-end gap-3 shrink-0">
                 <button
                   type="button"
                   onClick={closeModal}

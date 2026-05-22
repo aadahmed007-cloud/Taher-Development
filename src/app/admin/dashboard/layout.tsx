@@ -20,6 +20,7 @@ import Logo from '@/components/Logo';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const pathname = usePathname();
   const { data: session, status } = useSession();
@@ -31,6 +32,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       router.push('/admin/login');
     }
   }, [status, router]);
+
+  // Detect desktop viewport on client side to avoid SSR mismatch
+  useEffect(() => {
+    const updateDesktop = () => setIsDesktop(window.innerWidth >= 1024);
+    updateDesktop();
+    window.addEventListener('resize', updateDesktop);
+    return () => window.removeEventListener('resize', updateDesktop);
+  }, []);
 
   // Fetch unread messages count
   useEffect(() => {
@@ -64,7 +73,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     return (
       <div className="min-h-screen bg-[#0F172A] flex items-center justify-center" dir="rtl">
         <div className="text-center">
-          <Loader2 size={40} className="animate-spin text-[#D4AF37] mx-auto mb-4" />
+          <Loader2 size={40} className="animate-spin text-[#C8A84E] mx-auto mb-4" />
           <p className="text-slate-400 font-cairo">جاري التحقق من الهوية...</p>
         </div>
       </div>
@@ -100,11 +109,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Sidebar */}
       <motion.aside
         initial={{ x: 300 }}
-        animate={{ x: isSidebarOpen ? 0 : typeof window !== 'undefined' && window.innerWidth >= 1024 ? 0 : 300 }}
+        animate={{ x: isSidebarOpen ? 0 : isDesktop ? 0 : 300 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="fixed lg:sticky top-0 right-0 z-50 h-screen w-72 bg-[#1E293B] border-l border-[#D4AF37]/10 flex flex-col transition-transform lg:translate-x-0"
+        className="fixed lg:sticky top-0 right-0 z-50 h-screen w-72 bg-[#1E293B] border-l border-[#C8A84E]/10 flex flex-col transition-transform lg:translate-x-0"
       >
-        <div className="flex items-center justify-between h-20 px-6 border-b border-[#D4AF37]/10">
+        <div className="flex items-center justify-between h-20 px-6 border-b border-[#C8A84E]/10">
           <Link href="/admin/dashboard" className="flex flex-col">
             <Logo className="h-8" />
           </Link>
@@ -126,15 +135,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   href={item.href}
                   className={`flex items-center gap-3 px-4 py-3 rounded-sm transition-all duration-200 group ${
                     isActive
-                      ? 'bg-[#D4AF37]/10 text-[#D4AF37] border-r-2 border-[#D4AF37]'
+                      ? 'bg-[#C8A84E]/10 text-[#C8A84E] border-r-2 border-[#C8A84E]'
                       : 'text-slate-400 hover:bg-[#0F172A] hover:text-slate-200 border-r-2 border-transparent'
                   }`}
                   onClick={() => setIsSidebarOpen(false)}
                 >
-                  <item.icon size={20} className={isActive ? 'text-[#D4AF37]' : 'text-slate-500 group-hover:text-slate-300'} />
+                  <item.icon size={20} className={isActive ? 'text-[#C8A84E]' : 'text-slate-500 group-hover:text-slate-300'} />
                   <span className="font-medium">{item.name}</span>
                   {item.badge && item.badge > 0 && (
-                    <span className="mr-auto bg-[#D4AF37] text-[#0F172A] text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1.5">
+                    <span className="mr-auto bg-[#C8A84E] text-[#0F172A] text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1.5">
                       {item.badge}
                     </span>
                   )}
@@ -144,12 +153,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </nav>
 
           {/* View Site Link */}
-          <div className="mt-6 pt-4 border-t border-[#D4AF37]/10">
+          <div className="mt-6 pt-4 border-t border-[#C8A84E]/10">
             <a
               href="/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-[#D4AF37] hover:bg-[#D4AF37]/5 rounded-sm transition-all duration-200"
+              className="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-[#C8A84E] hover:bg-[#C8A84E]/5 rounded-sm transition-all duration-200"
             >
               <ExternalLink size={20} />
               <span className="font-medium">عرض الموقع</span>
@@ -157,7 +166,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </div>
         </div>
 
-        <div className="p-4 border-t border-[#D4AF37]/10">
+        <div className="p-4 border-t border-[#C8A84E]/10">
           <button
             onClick={handleLogout}
             className="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-red-400 hover:bg-red-400/10 rounded-sm transition-all duration-200 w-full"
@@ -171,7 +180,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-h-screen overflow-hidden">
         {/* Top Header */}
-        <header className="h-20 bg-[#1E293B] border-b border-[#D4AF37]/10 flex items-center justify-between px-6 lg:px-10 sticky top-0 z-30">
+        <header className="h-20 bg-[#1E293B] border-b border-[#C8A84E]/10 flex items-center justify-between px-6 lg:px-10 sticky top-0 z-30">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setIsSidebarOpen(true)}
@@ -188,7 +197,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <p className="text-sm font-bold text-white">{session.user?.name || 'المدير العام'}</p>
                 <p className="text-xs text-slate-400">{session.user?.email}</p>
               </div>
-              <div className="w-10 h-10 rounded-full bg-[#0F172A] border border-[#D4AF37]/30 flex items-center justify-center text-[#D4AF37] font-bold">
+              <div className="w-10 h-10 rounded-full bg-[#0F172A] border border-[#C8A84E]/30 flex items-center justify-center text-[#C8A84E] font-bold">
                 {(session.user?.name?.[0]) || 'أ'}
               </div>
             </div>

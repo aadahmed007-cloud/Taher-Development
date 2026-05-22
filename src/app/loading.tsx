@@ -2,7 +2,7 @@ export default function Loading() {
   return (
     <div className="min-h-screen bg-[#0F172A] font-cairo">
       {/* Navbar skeleton */}
-      <div className="fixed w-full z-50 bg-[#0F172A]/80 backdrop-blur-md border-b border-[#D4AF37]/20 h-20">
+      <div className="fixed w-full z-50 bg-[#0F172A]/80 backdrop-blur-md border-b border-[#C8A84E]/20 h-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex justify-between items-center">
           <div className="h-8 w-40 bg-slate-800 rounded-sm animate-pulse"></div>
           <div className="hidden md:flex gap-8">

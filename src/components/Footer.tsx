@@ -29,11 +29,13 @@ const socialLinks = [
 
 export default function Footer() {
   const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert('شكراً لاشتراكك في نشرتنا البريدية!');
+    setNewsletterSubmitted(true);
     setNewsletterEmail('');
+    setTimeout(() => setNewsletterSubmitted(false), 4000);
   };
 
   const scrollToTop = () => {
@@ -147,6 +149,11 @@ export default function Footer() {
                   اشتراك
                 </button>
               </div>
+              {newsletterSubmitted && (
+                <p className="text-[#C8A84E] text-sm font-light">
+                  شكراً لاشتراكك في نشرتنا البريدية!
+                </p>
+              )}
             </form>
           </div>
         </div>

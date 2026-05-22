@@ -45,8 +45,8 @@ export default function AdminLogin() {
   return (
     <div className="min-h-screen bg-[#0F172A] flex flex-col justify-center py-12 sm:px-6 lg:px-8 font-cairo relative overflow-hidden">
       {/* Background Decor */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#D4AF37]/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#D4AF37]/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/3 pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#C8A84E]/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#C8A84E]/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/3 pointer-events-none"></div>
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
         <Link href="/" className="flex justify-center mb-8 hover:opacity-80 transition-opacity">
@@ -66,7 +66,7 @@ export default function AdminLogin() {
         transition={{ duration: 0.5 }}
         className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10"
       >
-        <div className="bg-[#1E293B] py-8 px-4 shadow-premium sm:rounded-sm sm:px-10 border border-[#D4AF37]/20 relative overflow-hidden">
+        <div className="bg-[#1E293B] py-8 px-4 shadow-premium sm:rounded-sm sm:px-10 border border-[#C8A84E]/20 relative overflow-hidden">
           {/* Subtle top border gradient */}
           <div className="absolute top-0 left-0 right-0 h-[2px] gold-gradient"></div>
 
@@ -95,7 +95,7 @@ export default function AdminLogin() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full pr-10 bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#D4AF37] focus:border-[#D4AF37] sm:text-sm py-3 transition-colors placeholder-slate-600"
+                  className="block w-full pr-10 bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#C8A84E] focus:border-[#C8A84E] sm:text-sm py-3 transition-colors placeholder-slate-600"
                   placeholder="admin@taher.com"
                   required
                   disabled={isLoading}
@@ -115,7 +115,7 @@ export default function AdminLogin() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pr-10 bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#D4AF37] focus:border-[#D4AF37] sm:text-sm py-3 transition-colors placeholder-slate-600"
+                  className="block w-full pr-10 bg-[#0F172A] border border-slate-700 text-white rounded-sm focus:ring-[#C8A84E] focus:border-[#C8A84E] sm:text-sm py-3 transition-colors placeholder-slate-600"
                   placeholder="••••••••"
                   required
                   dir="ltr"
@@ -130,7 +130,7 @@ export default function AdminLogin() {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 bg-[#0F172A] border-slate-700 rounded-sm text-[#D4AF37] focus:ring-[#D4AF37]"
+                  className="h-4 w-4 bg-[#0F172A] border-slate-700 rounded-sm text-[#C8A84E] focus:ring-[#C8A84E]"
                 />
                 <label htmlFor="remember-me" className="mr-2 block text-sm text-slate-400">
                   تذكرني
@@ -142,7 +142,7 @@ export default function AdminLogin() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-sm shadow-sm text-sm font-bold text-[#0F172A] gold-gradient hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#D4AF37] focus:ring-offset-[#0F172A] transition-all items-center gap-2 group disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-sm shadow-sm text-sm font-bold text-[#0F172A] gold-gradient hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#C8A84E] focus:ring-offset-[#0F172A] transition-all items-center gap-2 group disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
                   <>
